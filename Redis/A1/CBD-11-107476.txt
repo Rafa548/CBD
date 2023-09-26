@@ -1,0 +1,15 @@
+redis cli
+redis
+dkokda
+redis cli ping
+ping
+set mykey smth
+get mykey
+help
+flushdb
+get mykey 1
+set c 
+set c
+set c 1
+incr c
+exit

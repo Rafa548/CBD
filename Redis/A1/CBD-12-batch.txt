@@ -1,0 +1,16 @@
+set mykey smth
+get mykey
+
+set c 33
+incr c
+decrby c 20
+
+get c
+set mykey omg
+get mykey
+
+rename mykey mynewkey
+
+type mynewkey
+type c
+
