@@ -67,7 +67,12 @@ public class ex15b {
             System.out.print("Username: ");
             username = sc_in.nextLine();
             if (!username.equals("")) {
-                if (Integer.parseInt(jedis.get(username)) == 0 && System.currentTimeMillis()
+                if (jedis.get(username) == null){
+                    startTime = System.currentTimeMillis();
+                    jedis.set(username+"time", String.valueOf(startTime));
+                    jedis.set(username, String.valueOf(n_unid));
+                }
+                else if (Integer.parseInt(jedis.get(username)) == 0 && System.currentTimeMillis()
                         - Long.parseLong(jedis.get(username + "time")) < time_limit * 1000) {
                     System.out.println("Only 30 products every 20 seconds");
                 } else {
