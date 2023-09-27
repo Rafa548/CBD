@@ -1,0 +1,85 @@
+Username: joao
+Buying products ('Enter' to quit): [orange, apple, banana]
+Product: orange
+Number of products: 33
+Only 30 units available
+Number of products: 2
+You bought 2 units
+Number of products: 2
+You bought 2 units
+Number of products: 2
+You bought 2 units
+Number of products: 2
+You bought 2 units
+Number of products: 2
+You bought 2 units
+Number of products: 2
+You bought 2 units
+Number of products: 2
+You bought 2 units
+Number of products: 2
+You bought 2 units
+Number of products: 65
+Only 14 units available
+Number of products: 
+Buying products ('Enter' to quit): [orange, apple, banana]
+Product: apple
+Number of products: 12
+You bought 12 units
+Number of products: 1
+User quota reseted
+You bought 1 units
+Number of products: 3
+You bought 3 units
+Number of products: 2
+You bought 2 units
+Number of products: 1
+You bought 1 units
+Number of products: 23
+You bought 23 units
+Number of products: 44
+No more units available
+Number of products: 3
+No more units available
+Number of products: 2
+No more units available
+Number of products: 1
+No more units available
+Number of products: 
+Buying products ('Enter' to quit): [orange, apple, banana]
+Product: 
+Username: luis
+Buying products ('Enter' to quit): [orange, apple, banana]
+Product: apple
+Number of products: 3
+You bought 3 units
+Number of products: 4
+You bought 4 units
+Number of products: 23
+You bought 23 units
+Number of products: 1
+No more units available
+Number of products: 1
+No more units available
+Number of products: 
+Buying products ('Enter' to quit): [orange, apple, banana]
+Product: 
+Username: joao
+Buying products ('Enter' to quit): [orange, apple, banana]
+Product: banana
+Number of products: 1
+You bought 1 units
+Number of products: 1
+You bought 1 units
+Number of products: 1
+You bought 1 units
+Number of products: 1
+You bought 1 units
+Number of products: 1
+You bought 1 units
+Number of products: 1
+You bought 1 units
+Number of products: 
+Buying products ('Enter' to quit): [orange, apple, banana]
+Product: 
+Username: 

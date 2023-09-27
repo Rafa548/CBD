@@ -1,0 +1,38 @@
+Username: luis
+Buying products ('Enter' to quit) (0/30) : arroz
+Buying products ('Enter' to quit) (1/30) : massa
+Buying products ('Enter' to quit) (2/30) : linguiça
+Buying products ('Enter' to quit) (3/30) : 
+Username: luisa
+Buying products ('Enter' to quit) (0/30) : smth
+Buying products ('Enter' to quit) (1/30) : dosjao
+Buying products ('Enter' to quit) (2/30) : sjoda
+Buying products ('Enter' to quit) (3/30) : 
+Username: luis
+Buying products ('Enter' to quit) (3/30) : s
+Buying products ('Enter' to quit) (4/30) : a
+Buying products ('Enter' to quit) (5/30) : x
+Buying products ('Enter' to quit) (6/30) : z
+Buying products ('Enter' to quit) (7/30) : c
+Buying products ('Enter' to quit) (8/30) : v
+Buying products ('Enter' to quit) (9/30) : b
+Buying products ('Enter' to quit) (10/30) : 
+Username: luis
+Buying products ('Enter' to quit) (10/30) : s
+Buying products ('Enter' to quit) (10/30) : a
+Buying products ('Enter' to quit) (10/30) : s
+Buying products ('Enter' to quit) (10/30) : a
+Buying products ('Enter' to quit) (10/30) : s
+Buying products ('Enter' to quit) (10/30) : a
+Buying products ('Enter' to quit) (10/30) : s
+Buying products ('Enter' to quit) (10/30) : a
+Buying products ('Enter' to quit) (10/30) : l
+Buying products ('Enter' to quit) (11/30) : s
+Buying products ('Enter' to quit) (11/30) : a
+Buying products ('Enter' to quit) (11/30) : s
+Buying products ('Enter' to quit) (11/30) : a
+Buying products ('Enter' to quit) (11/30) : ll
+Buying products ('Enter' to quit) (12/30) : lll
+Buying products ('Enter' to quit) (13/30) : lll
+User quota reseted
+Buying products ('Enter' to quit) (1/30) :
