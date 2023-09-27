@@ -9,7 +9,6 @@ public class ex15a {
         int time_limit = 1000;
         int n_unid = 30;
 
-
         Scanner sc_in = new Scanner(System.in); 
         Jedis jedis = new Jedis();
 
@@ -26,7 +25,7 @@ public class ex15a {
                 System.out.print("Buying products ('Enter' to quit): ");
                 String search = sc_in.nextLine(); 
                 while (!search.equals("") ){
-                        if (System.currentTimeMillis() - Long.parseLong(jedis.get(username+"time")) < time_limit*1000){
+                        if (System.currentTimeMillis() - Long.parseLong(jedis.get(username+"time")) > time_limit*1000){
                             System.out.println("User quota reseted");
                             startTime = System.currentTimeMillis();
                             jedis.set(username+"time", String.valueOf(startTime));
