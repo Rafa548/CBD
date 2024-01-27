@@ -1,0 +1,8 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "Products/lib/bson-4.10.2.jar",
+        "Products/lib/mongodb-driver-core-4.10.2.jar",
+        "Products/lib/mongodb-driver-sync-4.10.2.jar"
+    ]
+}

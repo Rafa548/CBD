@@ -1,0 +1,56 @@
+Username: hello
+Buying products ('Enter' to quit) (0/30) : s
+Buying products ('Enter' to quit) (1/30) : s
+Buying products ('Enter' to quit) (2/30) : s
+Buying products ('Enter' to quit) (3/30) : s
+Buying products ('Enter' to quit) (4/30) : s
+Buying products ('Enter' to quit) (5/30) : s
+Buying products ('Enter' to quit) (6/30) : s
+Buying products ('Enter' to quit) (7/30) : s
+Buying products ('Enter' to quit) (8/30) : s
+Buying products ('Enter' to quit) (9/30) : s
+Buying products ('Enter' to quit) (10/30) : s
+Buying products ('Enter' to quit) (11/30) : s
+Buying products ('Enter' to quit) (12/30) : s
+Buying products ('Enter' to quit) (13/30) : s
+Buying products ('Enter' to quit) (14/30) : s
+Buying products ('Enter' to quit) (15/30) : s
+Buying products ('Enter' to quit) (16/30) : s
+Buying products ('Enter' to quit) (17/30) : s
+Buying products ('Enter' to quit) (18/30) : s
+Buying products ('Enter' to quit) (19/30) : s
+Buying products ('Enter' to quit) (20/30) : s
+Buying products ('Enter' to quit) (21/30) : s
+Buying products ('Enter' to quit) (22/30) : s
+Buying products ('Enter' to quit) (23/30) : s
+Buying products ('Enter' to quit) (24/30) : s
+Buying products ('Enter' to quit) (25/30) : s
+Buying products ('Enter' to quit) (26/30) : s
+Buying products ('Enter' to quit) (27/30) : s
+Buying products ('Enter' to quit) (28/30) : s
+Buying products ('Enter' to quit) (29/30) : s
+Buying products ('Enter' to quit) (30/30) : s
+User quota reseted
+Buying products ('Enter' to quit) (30/30) : s
+Buying products ('Enter' to quit) (2/30) : s
+Buying products ('Enter' to quit) (3/30) : s
+Buying products ('Enter' to quit) (4/30) : s
+Buying products ('Enter' to quit) (5/30) : s
+Buying products ('Enter' to quit) (6/30) : s
+Buying products ('Enter' to quit) (7/30) : s
+Buying products ('Enter' to quit) (8/30) : s
+Buying products ('Enter' to quit) (9/30) : s
+Buying products ('Enter' to quit) (10/30) : 
+Username: d
+Buying products ('Enter' to quit) (10/30) : d
+Buying products ('Enter' to quit) (1/30) : sd
+Buying products ('Enter' to quit) (1/30) : ds
+Buying products ('Enter' to quit) (1/30) : ds
+Buying products ('Enter' to quit) (2/30) : ds
+Buying products ('Enter' to quit) (3/30) : ds
+Buying products ('Enter' to quit) (4/30) : ds
+Buying products ('Enter' to quit) (5/30) : ds
+Buying products ('Enter' to quit) (6/30) : ds
+Buying products ('Enter' to quit) (7/30) : d
+Buying products ('Enter' to quit) (2/30) : 
+Username: 

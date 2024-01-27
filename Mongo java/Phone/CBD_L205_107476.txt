@@ -1,0 +1,6 @@
+c)
+db.phones.aggregate([{$group:{_id:"$components.prefix",indicativosNacionais:{$sum: 1}}}])
+
+d)
+//javascript test
+find("2345")

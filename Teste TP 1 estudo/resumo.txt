@@ -1,0 +1,418 @@
+Aplicaçoes sao cada vez mais focadas nos dados mesmo que isso 
+signifique menor capacidade de computaçao ou seja menos performance
+
+A capacidade de um cpu passa a ser um problema secundario em comparaçao com a quantidade
+complexidade e velocidade de atualizaçao de dados
+
+Tipicamente um sistema de dados oferece as seguintes funcionalidades:
+
+    base de dados -> armazenamento de dados para utilizaçao futura
+    caches -> armazenamento de opreraçoes dispendiosas para existir mais velocidade de leitura
+    search indexes -> permite procura por palavras chaves ou filtrar dados
+    message queues -> comunicaçao assincrona entre processos
+    stream processing -> processamento de dados em tempo real assim que gerados
+    batch processing -> processamento de dados antigos apos um determinado intervalo de tempo
+
+Exemplo de stream vs batch
+    no stream podemos pensar na banca onde os dados sao processado no momento de forma a ter o saldo sempre atualizado
+    no batch podemos pensar na fatura da nos onde os dados consultados no fim do mes para ser calculada a mensalidade
+
+
+Nenhum desenvolvedor vai desenvolver sistemas de base de dados (ja tem demasiados e muito bons)
+
+É entao necessario escolher um sistema adequado para as nossas necessidades (necessidades do sistema que queremos desenvolver)
+
+E se nao existe um unico que responda a todas existe a necessiade de trabalhar de forma integrada com varios
+
+
+Requisitos (para garantir que os dados mantem a sua integridade em caso de falhas e a performance mantem-se mesmo que 
+um componente tenha problemas ou se existir um aumento na quantidade de informaçao)
+
+Logo é necessario existir
+    Fiabilidade->o sistema deve funcionar mesmo existindo problemas (qualquer tipo de problemas)
+    escabilidade->o sistema deve conseguir responder a qualquer mudança de trafego de dados
+    manutençao->varias pessoas devem ser capazes fazer alteraçoes ao longo do tempo
+
+
+Bases de dados (Conjunto de dados relacionados entre si e a sua organizaçao)
+    Varios tipos:
+        relacionais -> mais comum atualmente
+        documentais
+        motores de busca
+        chave-valor
+
+O controlo das mesmas é realizado por SGBD (sistemas de gestao de bases de dados)
+
+
+
+
+----------------------------------------------------------------
+
+
+
+2-Modelos de bases de dados (papel importante na implementaçao dos programas)
+
+Bases de dados relacionais
+    persistencia
+    integraçao
+    ACID    ///decorar
+    atomicidade -> tudo ou nada 
+    consistencia -> em todo o lado igual
+    isolamento -> sem conflitos so quando a operaçao termina é que aparece
+    durabildade -> depois de commited mesmo depois de falhas as alteraçoes ficam
+
+Impedance mismatch
+
+Nos ultimos anos tem-se verificado um aumento do volume de dados e trafego a par da reduçao 
+do relcaionamento entre eles, ou seja, cada vez mais dados relacionados
+
+tem-se verificado um conflito entre os principios de engenharia de software onde o paradigma é orientadp a objatos
+e os principios relacionais baseados em modelos matematicos este problema é desingado por impedance mismatch
+
+Verifica-se o mesmo em estruturas isoladas que violam os principios da normalizaçao
+
+Por exemplo:
+    Varios objetos representam funcionarios numa empresa, cada funcionario tera o seu departamento mas vario sfuncionarios
+    podem trabalhar no mesmo departamento 
+    se a base de dados refletir o paradigma orientado a objetos teremos uma repetiçao nos departamentos nos varios funcionarios e a base de dados
+    nao estara normalizada
+    no entato fazer multiplos select e joins para contruir uma entidade ás vezes não é a melhor opçao
+
+
+Normalizaçao (objetivo é reduzir a redundancia dos dados)
+
+uso de ids para identificar entidades de forma a ao existirem identidades semelhantes
+nao haver duvidas de qual é qual, assim é mais facil alterar as mesmas e fazer a sua traduçao
+
+qualquer base de dados com estas caracteristicas diz-se normalizada
+
+Responder ao aumento do fluxo de dados
+
+    2 abordagens
+        construir bases de dados maiores
+        ou um grupo de maquinas mais pequenas que se complementam
+
+    
+a primeira abordagem tem alguns problema porque normalmente o custo de duplicar a capacidade de uma basedados
+é mais que o dobro do custo de uma só para alem disso mesmo com recursos financeiros ilimitados existe o problema 
+das limitacoes fisicas e de engenharia á sua capacidade
+
+a segunda abordagem é mais exequivel, tambem tem alguns defeitos, uma vez que como é uma soluçao mais barata
+pode ser menos fiavel e ainda é necessario um sgbd compativel com esta abordagem
+
+Regra geral os SGBD têm alguma dificuldade em gerir escabilidade horizontal (dsitribuiçao da bd)
+
+O movimento NoSQL (Not only SQL) (provem utilizaçao de bds nao relacionais)
+Tem por base varios principios
+    nao relacional
+    API simples (sem joins)
+    Teorema Base & CAP (viola os principios do ACID)
+    Schema-free (esquema implicito e gerido pela aplicaçao)
+    Distribuidas (maior parte sao)
+    Open sourcer (igual ao de cima)
+
+
+Transaçoes BASE (em oposiçao ao ACID)
+    impoe:
+        Basic avallability (funcuina a maior parte do tempo)
+        Soft-state (manipulaçoes nao tem de ser write consistent (ou seja se escrever num nó nao precisa de ser garantidamente escrito nos restantes nos)
+        )
+        Eventual consistençy (apenas que eventualmente é conseguida a consistencia)
+
+Bases de dados de Nosql caracterizam-se por serem omitidas e simples logo sao tambem mais rapidas
+
+Teorema CAP
+    um sistema distribuido só pode apesentar duas de tres caracteristicas
+        consistencia (escritas atomicas em toda a bd em simultaneo)
+        disponibilidade (responde sempre a pedidos)
+        torelancia a falhas (continua o seu funcionamento mesmo em caso de algum nó falhar)
+
+    desta forma um designer é forcado a escolher entre consistencia e disponibilidade
+
+Tipos de BDS Nosql
+    Existem varios tipos:
+        Key-value-> armazenamento key-value num tabela de disperçao
+                    operaçoes sao realizados sobre o valor de uma determinada chave
+                    boa performance,escabilidade mas nao permite a realizaçao de queris complexos nem o armazenamento de dados complexos
+                    tipicamente armazenam dados nao persistentes, nao permitem relaçoes entre entidades
+        Documentais->modelo de dados estruturas compactas (json normalmente) self-describing,
+                    organizadas numa estrutura hierrarquica e cada documento tem um identificador unico
+                    permite queries tanto pelo sua chave (identificador ) tanto pelo seu valor
+                    nao funcio muito bem em relaçoes many-to-many
+
+///por completar
+
+
+
+--------------------------------------------------------------------------------------------------------------------
+
+3-Armazenamento e recolha de dados
+    exemplo do bash onde ao ser adicionada alguma coisa na bd tinha-se uma boa performance O(1) por so adicionar no fim
+    mas ao ler ser mais complicado por ter de procurar em todo o ficheiro a chave mais recente
+     (isto podia ser mitigado se só se permitisse uma só chave mas ao melhorar a pesquisa piorava-se a inserçao por ja nao poderem 
+     ser inseridas novas coisas sem verificar se ja existem e se existissem substituir)
+
+    Para resolver esse problema temos indices que mantêm um mapeamneto entre as chaves e as suas posiçoes na BD
+        apesar de melhorarem as consultas pioram ligeiramente as inserçoes uma vez que as mesmas para alem de registarem os pares
+        chave-valor agora tambem registam a sua localizaçao nos indeices associados
+
+    
+
+    Gestao do espaço em disco
+        adicionar sempre novos valores ocupa muito espaço ao longo do tempo aumentando tambem o tempo de consultados
+            A soluçao para este problema é segmentar compactar e combinar
+            Segmentar->inves de usar um ficheiro usa varios (muito bom se o que estivermos á procura é um fichero recente)
+                                                            (pode ser mau se o que queremos só esta no ficheiro mais antigo)
+            Compactar e combinar->feito no backgroud por threads sem problemas de disponibilidade e apenas mantem os valores mais recentes das chaves
+
+    Outros problemas
+        ->CSV nao é o mais eficiente preferir sempre binario
+        ->Eliminaçao de registos (muito dispendioso feito normalment implica ler,reescrever de todos os files alterados)
+                   (o mais eficiente é adicionar um registo especial que indica a sua remoçao (tombstone))
+        ->Recuperaçao de falhas (se forem usados indices e o sistema for abaixo vai demorar um bbcado para o mesmo refazer-los )
+                                (logo é recomendado criar snapshots em memoria dos indices)
+                                ->ou registos escritos parcialmente caso o sistema falhe durante um processo de inserçao
+                                    (isto traduz-se na implementaçao de checksums)
+        
+
+        ->controlo de acesso em concorrencia ou seja a escrita de forma sequencial deve ser feitoa apenas por uma thread
+            mas sendo os dados imutaveis e append_only pode ser feita em simultaneo
+        
+        ->há problemas sem resoluçao como por exemplo:
+            hash-table caber em memoria e querys para intervalos de valores
+
+Sorted String Table (SSTable) os dados sao ordenados pela chave (que é unica)
+    segmentaçao é mais eficiente (por chaves parcidas estarem perto uma sdas outras)
+    indices menos densos (pelos mesmos deixarem de indexar todas as chaves mas sim os padroes que as identificam) o inicio de cada segmento
+        Segmentaçao deve ser um compromisso entre o menorn numero de blocos e o menor tamanho de blocos
+            (como os valores noa soa repetidos a atualizaçao do seu valor implica reescrever o segmento em q o mesmo se situa)
+            a abordagem correta para prevenir escritas constante é armazenar as atualizaçoes em memoria numa arvore binaria a partir da qual
+            os valores sao periodicamente atualizados
+
+    Ordenaçao
+        quando a estrutura em memoria atinge um determinado limite a mesma deve ser armazenada em disco criando assim um novo segmento
+        as consultas verificam a arvore binaria e se nao encontrarem o q procuram o proximo segmento e por ai fora ate encontrarem uma correspondencia
+        isto melhora a escrita mas prejudica a consulta para evitar tal acontecimento deve-se periodicamente combinar e compactar a bd
+
+    Recuperaçao de falhas
+        os dados mais recentes sao armazenados em memoria logo em caso de falhar os mesmos sao perdidos para evitar este problema
+       //pergunta   muitas sst mantem um append-only log em memoria que atualiam em cada escrita de forma a permitir esta Recuperaçao
+        (este log é limpo periodicamente apos ser garantida a escrita em disco)
+
+B-trees 
+    mantem os pares key/value ordenados pela chave (logo leituras bastenates eficiente mesmo com intervalos de dados)
+    divide a bd em blocos/paginas de tamanho fixo
+    em cada pagina há k valores com k+1 referencias (k geralmente na ordem das centenas)
+
+
+    operaçoes
+        pesquisa inserçao e remoçao (O(Log k n))
+        a inserçao é a operaçoao com maior custo porque caso a pagina ja tenha atingido o valor k obriga a divisao em duas paginas
+        e a reorganizaçao dessa area da arvore, o que pode impactar varias paginas
+
+        Aspetos a considerar
+        gestao de falhas igual ás sst com o log appends_only
+        a gestao de concorrencia é feita usando semaforos
+    
+    otimizaçoes
+        inves de append_only logs pode ser usada a tecnica copy_on_write scheme
+            (cria-se novas paginas sempre que alguma vais ser reescrita) de forma a garantir que se houver alguma falha a integridae da base de dados mantem-se
+        podem tmb ser usadas tecnicas de abrebiaçao de chaves
+    
+    //pag 17 inicio por fazer nao entendi muito bem / parece meio secundario
+
+
+Bases de dados em memoria
+    hoje em dia ja existe e normalmente sao mais rapidas que as suas opostas uma vez que nao têm de codificar os dados para armazenar os mesmo em disco
+    dessa forma permitem mais facilmente trabalhar com estruturas dificei de guardas em discos tais como set etc...
+    (mais rapida nao se deve diretemente ao facto de nas normais serem em disco porque essas geralmente sao carregadas e acedidas em memoria)
+
+Processamento e analise transacional
+    Online Transaction Processing (OLTP)
+        define-se por permitir fazer consultas e escritas com baixas latencias
+        contrasta com batch processing que normalmente le e processa uma grande quantidade de dados (por exemplo uma vez por dia)
+
+    Online Analytic Processing (OLAP)
+        normalmente usado em bases de dados cujo fim é analise de dados analiticos que geralmente consiste em ler e processar uma grande quantidade de dados
+    
+
+    OLTP VS OLAP
+        O OLTP  faz leitura pequenas e de acesso aleatorio tais como as escritas, estes devem ser utilizados para operaçoes comuns nas empresas e normalmente ocupam gigas
+        O OLAP  a leitura é feita em massa e a esxrita em bulk import e ocupam teras normalmente usados pelos gestores para suporte a planeamento e a tarefas de controlo
+
+        OLAP normalment ocupam mais espaço que os OLTP porque os dados no mesmo nao são normalizados
+        Desta forma os padroes sao geralmente implementados em bases de dados distintas
+
+        as focadas em OLPT dizem-se relacionais as fucadas em olap dizem-se data warehouses
+
+Implementaçoes distintas
+    //parece meio secundario completar dps maybe
+
+
+Data warehouses (bases de dados focadas na analise de dados geralmente associadas ás transacionais)
+    onde extraem os dados que sao transformados e limpos antes de carregados (ETL (extract,transform,load))
+    os dados podem vir dde varias bds e tranformados de forma a serem integrados unificados pode ainda ser feita uma limpeza de valores
+    nao consistentes ou nulos
+
+    Esquema da BD
+        esquema em estrela->tabela peincipal,designada por fact table,cada linha corresponde uma ocorrencia e cada coluna um valor ou referencia a outra tabela
+            este esquema apresenta apenas duas dimensoes ou seja apesar da fact table poder ter referencias para outras tabelas,estas por sua vez ja nao podem ter referencias a outras
+
+        modelo snowflake->este dividade as duas dimensoes do anterior em varias é por isso mais normalizada mas como consequencia mais complexa de utilizar
+
+    Queries 
+        o facto de armazenar os dados historicos nao normalizados leva a estas bds terem um numro enorme de registos com um numero muito elevado de colunas
+        em consultas linha a linha nao é um grande problemas porqu normalmente sao lidas poucas
+
+        no entanto para obter todos os valores de uma coluna é necessario ler a totalidade da tabela desta forma desperdiçando imensos recursos
+        neste caso a soluçao é armazenamento orientado ás colunas
+
+    Armazenamento orientado ás colunas
+        este armazenamento consiste em separar cada linha pelas suas colunas e armazenar cada coluna num bloco/pagina separado
+        tem por base (e é essencial ) que cada ficheiro tem a mesma ordem de colunas
+        é facil de comprimir
+        ordenaçao por determinada coluna significa reordenaçao de todos os blocos 
+
+    Escrita
+        Se os dados forem ordenados fica mais complexo, de forma a garantir consistencia
+        normalmente usa-se btrees com append-log
+    
+    Materilized views (conjunto de agregaçoes agrupadas em varias dimensoes)
+        //perguntar n percebi isto
+
+-----------------------------------------------------------------------------
+4-Formato de dados
+
+    devido ás atualizaçoes constantes nas bds é importante existir independencia do dados em relaçao a estas
+    de forma a permitir compatibilidade com o passado e o futuro (versao antiga e nova de uma app devem conseguir ler os mesmo dados)
+
+    geralmente o programador é abstraido sabendo apenas que ao guardar um valor de um determinado tipo quando o for consultar
+    esse vai continuar desse tipo
+    esta abstraçao é garantida pelos processos de encoding/serializaçao que passam os dados para sequencias de bytes e decoding/deserializaçao que fazem o inverso
+
+    muitas linguagem oferecem isto por default o problema é que como é dependente da linguagem em si pode mudar 
+    logo os mesmo devem ser aplicados apenas em versoes temporarias
+
+    Formatos textuais (JSON,XML)
+
+    normalmente legiveis pelo ser humano mas como implementam menos restriçoes geram alguma ambiguidade entre tipos de dados (nomeadamente strings e numeros)
+
+    Codificaçao binária
+        armazenamento em formato binario que apesar de nao ser legivel pelo ser humano é mais compacto e é lido mais rapidamente
+        uma vez que o esquemo nos indica o dados a ler pelo que sao diretamente lidos no seu formado
+        (Num formato textual é tudo lido como string e depois convertido)
+
+    
+    Formatos textuais
+
+        CSV (comma-separated values)
+            not standard aceita dois tipos de separadores , e ; nate mescape format definido nem info sobre a sua Codificaçao
+        
+        XML (Extensive markup language)
+            semi-estruturado tem normas quanto á organizaçao dos dados
+            tem constructs sendo delimitado pelos marcadores de abertura e fecho 
+            atributos sao feitos numa noçao de key-value
+
+        JSON (javascript object notation)
+            pares key-value e listas ordenadas
+        
+        Bson (binary JSON)
+            json em memorio no formato binario
+            é necessario dados adicionais como o tipo de dados durante a serializaçao
+            mas depois é mais rapida a leitura dos mesmos
+        
+        RDF (resource description framework) triplo de informaçao
+            muito usado em semantic web 
+            cada recurso ttem as suas propriedades,valores e recurso que +e um identificador unico
+            o esquema é identificado no marcadore inicial e tem de ser aplicado exatamente nesse ficheiro
+            (no exemplo a azual tem um recurso a que esta associado uma propriedade (vermelho) e um valor(verde))
+
+        Protocol Buffers (.proto)
+            proposto pela google é uma especie de objeto
+
+
+
+-----------------------------------------------------------
+5-Key-value databses
+
+chave unica e um valor que pode ser qualquer coisa
+escritas
+nao existe relaçoes entre entidades
+
+Vantagens
+tolerancia a falhas
+sem esquema
+leitura unica muito pouco espaço
+gostam de write once read many
+
+desvantagens
+em aplicaçoes complexas n corre bem
+em queries com intervalos/limites n é muito bom
+com muitos dados fica cada vez mais dificil chaves unicas 
+para ler tem de ler todos os dados
+so se pode pesquisar pela key
+
+
+---------------------------------------------------------------------------------
+
+6-Bases de dados documentais
+    bastante eficientes em cenarios one-to-many
+    esquema flexivel (mesmo dentro das smesma coleçoes) e melhor preformance porque a informaçao é 
+    guardada junto da identidade a que se refere e manipulado atraves de um codigo simples
+
+    flexibilidade permite que existem objetos na mesma coleçao com atributos ligeiramente diferentes sem necessidade de criar uma tabela
+    para cada tipo de objeto
+    a localidade pode levar á duplicaçao entre documetos
+
+    um documento é ums string codificada em JSON,XML etc é self-describing e apresenta uma estrutura em arvore
+    sao identificados por um id unico
+
+    normalmente para o manipular nenecessario carregar e reescrever o mesmo na totalidade
+
+    many-to-many nao funciona muito bem e dever ser evitada em cenaiors onde a estrutura do documento é demasiado instavel
+    (se todos os documentos apresentarem caracteristicas diferentes nao sao relacionaveis logo nao faz sentido estarem na mesma coleçao)
+
+    Por ser a soluçao para alguns as bases de dados relacionais começaram a incluir funcionalidades documentais
+
+----------------------------------------------------------------------------------------------
+
+7-Bases de dados orientadas a colunas 
+    armazena e processa os dados em colunas tem origem geralmente em queries agregadores de dados 
+    que peritem gerar dados para fins estatisticos ou business intelligence
+
+    o objeto é entao os serviços acima da utilizaçao do armazenamento permitindo o processamento pararelo
+    e consequentemente aplicaçoes com desempenho muito alto 
+
+    a falta de normalizaçao faz os dados serem muito soltos e que hajam bastante campos nulos
+
+    est4e modelo é vantajoso em cenarios em que sao feitos queries com poucas colunas sobre grandes volumes de dados
+    maior facilidade de compressao por colunas porque os dados tendem a estar mais relacionados
+
+    desvantagens->carregamento incremental de dados, o uso de OLTP e a realizaçao de queros a linhas
+    (carregamento incremental significa atualizaçoes constantes a cada inserça edita-se todas as colunas)
+
+    BIGTABLE da google foi a origem
+
+    tabelas ->familia de colunas
+    linha ->coleçao de colunas
+    coluna->tem um nome e valor
+
+    Casos de uso
+    normalmente sao usadas para armazenamento de dados estruturdos com um esquema uniforme
+
+    nao garantem ACID,queries complexos,nem prototipagem
+
+    Cassandra (Facebook origem agr é pela APACHE)
+
+    alto desempenho na  escrita sem prejudicar leituras
+
+    topologia
+    o sitema tem nodes agrupados em data centers que estao agrupados em clusters
+    um cluster pode ter varios data centers que operam sobre os mesmos dados
+    um node executa o cassandra e varios nodes relacionados entre si sao um data centers
+
+
+
+
+
+

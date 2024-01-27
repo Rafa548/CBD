@@ -1,0 +1,5 @@
+para começar a executar entrar na pasta bin
+e usar ./cassandra -f
+
+versao tem de ser a 11
+sudo update-alternatives --config java

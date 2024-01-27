@@ -1,0 +1,19 @@
+Redis:
+    Prós:
+        Redis é altamente eficiente para operações de leitura e gravação rápidas, o que pode ser adequado para registrar ações de usuários e atualizar limites de unidades e produtos em tempo real.
+        Pode ser usado para armazenar temporariamente os dados do usuário, mantendo-os em memória para acesso rápido.
+
+    Contras:
+        Redis pode não ser a melhor escolha se for necessaria a durabilidade de dados a longo prazo, pois os dados podem ser perdidos em caso de falha.
+
+MongoDB:
+
+    Prós:
+        MongoDB é adequado para armazenar dados mais persistentes, incluindo os dados dos usuários e seus produtos.
+        Oferece suporte a uma estrutura de documentos flexível, o que permite armazenar informações complexas sobre os usuários.
+
+    Contras:
+        Pode ser mais lento do que Redis para algumas operações em tempo real, devido à persistência e indexação.
+
+Neste exercicio a durabilidade dos dados é importante para manter um registro confiável das ações dos usuários logo MongoDB é a escolha mais apropriada. Além disso, como o número de produtos 
+é limitado a 30 a cada 20 segundos o Mongo consegue gerenciar isso de maneira eficiente.
