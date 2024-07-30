@@ -1,0 +1,390 @@
+Cap 8
+
+subgrafos-pesquisa sobre determinado padrao que deve estar em efeito
+super-grafos-pesquisa sobre toda a estrutura por um resultado que deve estar no grafo
+
+
+nao usar se houverem muitos dados, ou se se mudar coisas com muita frequencia
+
+triple-stores (sujeito-predicado-objeto)
+
+neo4j usa cypher
+
+
+9-------
+
+DBMS centralizados sao conhecidos pelas suas propriedades acid em todas as transaçoes,pelo controlo da concorrencia nos acessos e ainda pelos mecanismos de recuperaçao a falhas
+
+no entando á medida que os dados aumentam a escalabilidade vertical nao vai ser uma boa soluçao uma vez que o input/output de dados em disco vai tornando-se progressivamente mais lento e exigente
+
+
+Bases de dados paralelas
+
+Têm a capacidade de utilizar multiplos cpu e discos de forma a suportar operaçoes paralelas, permitem aumentar aa velocidade de resposta aos pedidos
+
+atraves de divide and conquer permite dividir um problema grande em pequenas peças de forma a que possam ser resolvidas em paralelo, é fundamental que os dados estejam distribuidos pelos varios discos
+
+sao utilizadas para armazenamento de grandes volumes de dados, em que as decisoes têm de ser tomadas rapidamente
+
+Vantagens
+
+Alta performance (paralelismo inter-query (alto rendimento), paralelismo intra-operaçao(baixos tempos de resposta) e distribuiçao de carga
+Alta disponibilidade (maior replicaçao de dados isto tambem significa maior custo de write mas em caso de falhas é mais safe)
+Extensibilidade (pode ter como objetivo velocidade ou escalibilidade)
+
+Speed-up (maior performance)
+aumento do numero de nos em relaçao ao volume da bd
+
+
+Scale-up (maior numero de dados)
+aumento do volume e do numero de nos na mesma porporçao
+
+
+Desvantagens
+
+Inicializaçao (fazer uma tarefa ser parelela deve ter um tempo de processamento insignificante em comparaçao com o tempo de computaçao dela)
+Interferencia (quantos mais processos mais lento fica)
+Skew (má distribuiçao , é preciso ter cuidado de forma á partiçao dos dados ser feita de forma igual)
+
+Arquiteturas
+
+Arquiteturas multiprocessador
+
+escalabilidade vertical (maquina mais potente)
+
+memoria partilhada-mesmas ram, varios discos
+	++++comunicaçao entre nos, previne copias redundantes
+	----custo de aumento de ram nao é linear (2x quantidade de ram é mais q 2x preço) e nao significa 2x o trabalho
+	nao tem tolerancia a falhas na memoria
+	
+
+disco partilhado (mesmo disco, varias rams)
+	----problemas no controlo de concorrencia que levam a tempos de espera elevados com muitas escritas (logo 	escalabilidade limitada
+
+
+escalabilidade horizontal 
+nada partilhado
+	+++facil de expandir,alta disponibilidade, latencia reduzida
+	---muito complexo na gestao da carga de trabalho
+
+
+Arquiteturas hibridas (tentam combinar as anteriores)
+
+eficiencia e simplicidade da memoria partilhada e extensabilidade e baixo custo do disco partilhado ou do nada partilhado
+
+NUMA (non-uniform memory acess), mistura conceitos de memorias distribuidas com memoria partilhada ao nivel do endereçamento, para tal oferece espaço de endereçamento unico sobre uma memoria distribuida
+
+Usa o protocolo CC-NUMA que permite o acesso á memoria remota de outro nó de forma altamente eficiente
+
+
+Distribuidas
+
+bds separadas fisicamente
+
+Paralelas vs Distribuidas
+
+paralelas têm foco na velocidade com latencia quase 0 garantida pela proximidade de nos 
+
+distribuidas focam na partilha dos dados q garante mais eficiencia em grandes volumes mas é mais facil existir lag
+
+no entanto é possivel serem utilizadas em simultaneo, haverem bds distribuidas que em cada no implementam processamento em paralelo
+
+Localizaçao dos dados
+
+Partiçao - divisao da bd de dados em subconjuntos mais pequenos de dados
+Replicaçao - copia de dados em vario sitios
+
+Ao usar partiçao horizontal é necessario implementar tecicas para dividir os dados pelos nos da db
+
+Round robin- um para cada por ordem de chegada e repete
+Hash partioning-hash simplemente que é atribuido a um no, mau para queries de range etc
+Range partioning- cada no fica com valores no respetivo intervalo
+
+range query é o melhor em no geral os outros sao bons para coisas especificas
+
+
+Otimizaçao de queries em paralelo
+
+Paralelismo inter-query  (varios pedidos sao divididos por varios nos, aumenta a speed das transactions, tira partido da mem partilhada)
+Paralelismo intra-query (permite aumentar a speed de querys mais exigentes, divide o query em varias partes e envia para varios nos que tratam da mesma)
+	intra-operaçao (processador da mesma bd)
+	inter-operaçao (partiçao da bd)
+
+
+Processamento de dados em paralelo
+
+(muita bullshit o mais importante é procurar sempre minimizar o movimente de dados entre as maquinas)
+
+depois é mencionado cenas sobre select,sort e join mas é pensar no que faz sentido por exemplo os selects é ,mais simples
+nas hash/range e porque ja têm algum tipo de ordem enquanto no round robin é preciso procurar em todas as partiçoes
+
+no caso do sort pensar no merge-sort ou seja ordenar aos poucos e no fim ordenar tudo
+
+join é ir comparando
+
+
+Gestao de carga 
+
+erro comum é ordenar a tabela sobre um dado que pouco muda
+
+Gestao de transaçoes distribuidas
+
+basicamente é a aquela cena de cd tem o chefe q recebe feedback de todos uma coisa só é escrita se todos concordarem
+isto é feito com duas msg uma a avisar e outra a dizer faz
+
+
+
+
+------------------------------------------
+
+Cap 10
+
+bds distribuidas melhora a latencia, disponibilidade e escabilidade isto é feito ao fazer replicaçao de dados
+
+Mas para tal é necessario gerir as alteraços de dados de forma a garantir a sua consistencia
+
+Replicaçao single-leader
+
+distingue entre lideres e seguidores
+
+lideres podem escrever e ler (ao receber pedido de escrita escreve e comunica as seguidores que escreveu que atualizam a suas bds)
+seguidores só podem ler
+
+Sincronismo
+
+sincrono o lider espera resposta do seguidor para saber se foi sucessefull
+assincrono assume ficar estar correto e responde direto com base no que ele proprio escreveu
+
+normalmente sincrono é exequivel por nao demorar tanto a comunicaçao as seguidores desta forma é garantida a consistencia da bd se o lider morrer todos sabem tudo
+
+tem como desvantangem que se algum seguidor tiver algum problema relativamente simples fica stuck
+
+logo em pratica é impossivel ter todos os nos sincronos logo hoje em dia usa-se duas abordajens
+
+semi-sincrono - lider tem um par sincrono (se esse par falhar é elegio um novo) restantes nos sao assincronos
+totalmente assincrona - tudo assincrono em caso e falha no lider é perdida informaçao
+
+Novos seguidores
+
+o novo seguidor faz um pedido dos dados, o lider envia um snapshot dos mesmo quando o seguidor acaba de os processar pede de novo ao lider tudo o que foi feito apos a snaapshot
+
+Saidas dos seguidores
+
+seguir da come back é necessario dar catch-up (pede a diferença de onde ficou para o atual)
+lider morre (é necessario eleger um novo, ao eleger um novo se o anterior voltar ele deve perder privilegios de escrita, para assumir que morre deve ser usado um timeout)
+
+Logs de replicaçao
+
+Statement-based replication (lider ao executar comnado manda o mesmo para os seguidores (pode ser problematico em funçoes random etc.. )
+
+Write-ahead log (WAL) (resultado do query para append-log dps é so copiar (seguidores) é preciso ter a mesma estrutura de armazenamento)
+
+Logical log replication (igual ao WAL mas os dados nao dependem da representaçao interna do sistema)
+
+Trigger-based replication (replicaçao ao nivel da camada da app)
+
+Lag na replicaçao (nao existe consistencia apenas consistecia eventual)
+
+
+Garantias que devem ser asseguradas
+
+Read-after-write consistency (utilizador deve conseguir ver os dados que escreveu na bd)
+
+Monoatomic reads (sempre a andar para a frente se um valor for atualizado nunca deve ser lido o seu valor antigo)
+
+Consistent prefix reads (a->b deve ser lido a-b (a é uma pergunta b uma resposta))
+
+Replicaçao multi-leader
+
+escritas podem ser feitas em mais que uma replica de forma a que cada replica passa a fazerse de leader e seguidor
+
+Use cases de multi-leader
+
+em varios datacenters distribuidos faz-se isto onde cada datacenter tem os seus seguidores internamente e usa single leader
+e entre datacenters tem-se multi leader
+
+Cliente com operaçao offline (cada cliente tem replica dos dados e atua como lider se ficar offline)
+
+Ediçao colaborativa (i mean ...)
+
+Tecnicas de replicaçao
+
+topologia (descreve como as comunicaçoes se propagam entre nós)
+
+circular (1 a 1 circulo)
+star (central que ta conectado aos outro)
+all-to-all (o nome diz tudo)
+
+Replicaçao leaderless
+
+nao á liders todos podem escrever (cliente envia os queries para as varias replicas ou define-se um cordenador que encaminha (neste caso a ordem nao é definida so manda ao contrario da single leader))
+
+Recuperaçao de falhas
+
+Read repair (le e se deteta inconsistem faz um pedido de correçao)
+Anti entropy process (em segund plano que esta em constante procura por diffs)
+
+Bullshit do quorom
+
+Gestao de escritas concorrentes
+
+Last write wins (timestamp o primeiro tem prioridade)
+Keys with version number (pedido com v se houver dois pedidos com a v igual aborta)
+Merging concurrenctly written values (nenhum valor é descartado silenciosamente)
+Version vectors (numero de v por replica e por chave em cada replica se for feita uma leitura antes é seguro ler)
+
+----------------------------------------
+
+CAP 11
+sharding-> processo de partir conjunto de dados em subconjunto mais pequeno e atribuir a nos diferentes
+
+Tipos de partiçao
+
+distribuiçao uniforme
+
+horizontal (linhas)
+vertical (colunas)
+
+
+chave primaria pode dar problemas (hot spots) por exemplo quando existe uma grande concentraçao de cenas ex: clebridade e escandalo uma boa funçao de hash ajuda mas perde eficiencia de pesquisa de intervalos, isto é deixa de haver ordenaçao
+
+indices secundarios
+
+indice particionado em documentos (um indice por partiçao é preciso mandar para todas e combinar no fim) 
+
+indice baseado em termos (indice global partilhado pelas varias partiçoes bom para leituras, para escritaas implica alterar todos)
+
+
+Equilibrio das partiçoes
+
+qualquer falha aumento ou tranferencia de responsabilidades implica mover dados entre nós, isto nao é trivial e nao deve interferir com a disponibilidade do sistema, minimo de movimentaçoes de dados 
+
+pode ser feita manualmente ou automaticamente se for automatico pode dar problemas entao deve sempre existir congtrolo humano
+
+Nunca usar round-robin nesta situaçao
+
+Nao percebi isto !!!!! numero fixxo de partiçoes !!!!!!!!!!!!!!!!!!!
+
+Partiçao dnamica
+
+cria partiçoes de forma dinamica (top divide a partiçao em duas quando o tamanho alcance um certo valor e une quando dados sao eliminados e podem ser fundidos) 
+
+bom por responder a alteraçoes
+mau por poucos dados ficarem concentrados num unico nó
+
+
+Processo de roteamento
+
+contactar qualquer um dos nos (e esse no se nao for o correto encaminha para o certo)
+mandar direto para o certo
+mandar para um broker (routing tier first) que trata do assunto (Chama-se zoo-keeper ele sabe os estados dos nos etc)
+
+
+
+----------------------------------
+
+CAP 12
+
+modelo de programaçao map reduce (feito para processar e gerir grandes quantidades de dados)
+
+tem 3 fazes
+
+map (coisa parecidas vao para o mesmo bloco tem varios blocos "gerais))
+shuffle (de todos os blocos os iguais sao juntos)
+reduce (junçao/calculo do numero de ocorrencias)
+
+HDFS (sistemas de ficheiros compartilhados)
+
+tolerante a falhas
+normalmente usado quando atualizaçoes sao raras e appends e leituras sao frequentes
+
+tem algumas permissas 
+
+(ver no resumo se me apetecer!!!!)
+
+usa a arquitetura lider-seguidores 
+
+tem o NameNode que mapeia o nome do file para a sua localizaçao 
+os clientes consultam o Namenode para saberes onde esta o file que querem aceder e depois acedem diretamente ao mesmo
+
+YARN (Sistema operativo sobre o HDFS)
+
+gere e controla os seus recursos e alocaçao
+
+aloca as tarefas pedidas ao resource manager pelos nos geridos pelo mesmo, esta atribuiçao é mediada pelo applications master
+
+Haddoc
+
+usa isto tudo
+
+tem o map reduce 
+o yarn
+o hdfs
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
